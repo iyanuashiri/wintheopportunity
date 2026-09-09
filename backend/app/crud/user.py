@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from app.models.user import User
 from app.schemas.user import UserCreate
+from app.models.organization import Organization
 
 
 def get_user(session: Session, user_id: int) -> User | None:
@@ -24,6 +25,11 @@ def create_user(session: Session, user: UserCreate) -> User:
     )
     db_user.set_password(user.password)
     session.add(db_user)
+    session.flush()  # assign db_user.id before creating org
+
+    db_org = Organization(user_id=db_user.id)
+    session.add(db_org)
+
     session.commit()
     session.refresh(db_user)
     return db_user
