@@ -8,6 +8,18 @@ def get_organization_by_user(session: Session, user_id: int) -> Organization | N
     return session.query(Organization).filter(Organization.user_id == user_id).first()
 
 
+def get_all_organizations(
+    session: Session, skip: int = 0, limit: int = 100
+) -> list[Organization]:
+    return (
+        session.query(Organization)
+        .order_by(Organization.created_at.desc())
+        .offset(skip)
+        .limit(limit)
+        .all()
+    )
+
+
 def update_organization(
     session: Session, db_org: Organization, org_in: OrganizationUpdate
 ) -> Organization:

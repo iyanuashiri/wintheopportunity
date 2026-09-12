@@ -7,6 +7,16 @@ from app.schemas.organization import OrganizationRead, OrganizationUpdate
 router = APIRouter(prefix="/organizations", tags=["Organizations"])
 
 
+@router.get("/", response_model=list[OrganizationRead])
+async def list_organizations(
+    session: SessionDep,
+    skip: int = 0,
+    limit: int = 100,
+) -> list[OrganizationRead]:
+    """List all organization profiles. Used by the recommender agent."""
+    return crud.get_all_organizations(session, skip=skip, limit=limit)
+
+
 @router.get("/me/", response_model=OrganizationRead)
 async def get_my_organization(
     session: SessionDep,
