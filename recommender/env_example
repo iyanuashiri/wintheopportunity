@@ -1,0 +1,13 @@
+# Base URL of the backend API this service reads from / writes to
+API_BASE_URL=http://localhost:8000
+
+# Agent / LLM configuration (Gemma 4 31B via OpenRouter for scoring)
+OPENROUTER_API_KEY=
+OPENROUTER_BASE_URL=https://openrouter.ai/api/v1
+AGENT_MODEL_ID=google/gemma-4-31b-it
+
+# RAG / vector store configuration
+CHROMA_PATH=./chroma_db
+EMBEDDING_MODEL=sentence-transformers/all-MiniLM-L6-v2
+RECOMMENDER_TOP_K=10
+RECOMMENDER_LOOKBACK_HOURS=24
