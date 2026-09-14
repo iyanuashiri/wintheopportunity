@@ -19,6 +19,9 @@ class Settings(BaseSettings):
     # Base URL of the backend API this service reads from / writes to
     api_base_url: str = Field(default="http://localhost:8000", alias="API_BASE_URL")
 
+    # Service API key used to authenticate with the backend
+    service_api_key: str = Field(default="", alias="SERVICE_API_KEY")
+
     # Agent / LLM configuration (Gemma 4 31B via OpenRouter for scoring)
     openrouter_api_key: str = Field(default="", alias="OPENROUTER_API_KEY")
     openrouter_base_url: str = Field(

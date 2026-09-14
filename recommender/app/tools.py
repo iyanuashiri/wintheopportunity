@@ -19,6 +19,14 @@ from app.config import settings
 logger = logging.getLogger(__name__)
 
 
+def _headers() -> dict[str, str]:
+    """Return auth headers for backend calls (service API key if configured)."""
+    headers = {}
+    if settings.service_api_key:
+        headers["X-API-Key"] = settings.service_api_key
+    return headers
+
+
 @tool
 def fetch_new_opportunities() -> list[dict]:
     """Fetch opportunities created in the recent lookback window.
@@ -81,6 +89,7 @@ def fetch_recommended_opportunity_ids(user_id: int) -> list[int]:
     resp = httpx.get(
         f"{settings.api_base_url}/api/v1/recommendations/opportunity-ids/",
         params={"user_id": user_id},
+        headers=_headers(),
         timeout=60,
     )
     resp.raise_for_status()

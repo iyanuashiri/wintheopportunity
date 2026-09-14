@@ -50,6 +50,12 @@ class Opportunity(Base):
     )
 
 
+class RecommendationStatus(str, enum.Enum):
+    ACTIVE = "active"
+    EXPIRED = "expired"
+    DISMISSED = "dismissed"
+
+
 class Recommendation(Base):
     __tablename__ = "recommendations"
 
@@ -58,7 +64,12 @@ class Recommendation(Base):
     opportunity_id: Mapped[int] = mapped_column(ForeignKey("opportunities.id"))
     relevance_score: Mapped[float] = mapped_column(Float)
     match_reason: Mapped[str | None] = mapped_column(Text)
-    
+    source: Mapped[str | None] = mapped_column(String(50), default="hybrid")
+    status: Mapped[RecommendationStatus] = mapped_column(
+        Enum(RecommendationStatus), default=RecommendationStatus.ACTIVE
+    )
+    is_active: Mapped[bool] = mapped_column(default=True)
+
     created_at: Mapped[datetime] = mapped_column(
         DateTime, default=lambda: datetime.now(timezone.utc)
     )

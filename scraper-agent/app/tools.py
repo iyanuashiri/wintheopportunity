@@ -19,6 +19,14 @@ from app.scraper import extract_detail_links, scrape_webpage
 logger = logging.getLogger(__name__)
 
 
+def _headers() -> dict[str, str]:
+    """Return auth headers for backend calls (service API key if configured)."""
+    headers = {}
+    if settings.service_api_key:
+        headers["X-API-Key"] = settings.service_api_key
+    return headers
+
+
 def _html_to_text(html: str, max_chars: int = 12000) -> str:
     """Strip HTML tags and limit the text length to avoid context overflow."""
     soup = BeautifulSoup(html, "html.parser")
@@ -110,6 +118,7 @@ def save_opportunities(
     resp = httpx.post(
         f"{settings.api_base_url}/api/v1/opportunities/upsert/",
         json=opportunities,
+        headers=_headers(),
         timeout=60,
     )
     resp.raise_for_status()

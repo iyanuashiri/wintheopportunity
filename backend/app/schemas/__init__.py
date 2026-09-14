@@ -9,5 +9,24 @@ from app.schemas.opportunity import (
     OpportunityRead,
     OpportunityUpsertResult,
 )
+from app.schemas.recommendation import (
+    RecommendationCreate,
+    RecommendationCreateResult,
+    RecommendationRead,
+)
+from app.schemas.application import (
+    ApplicationCreate,
+    ApplicationReadDetail,
+    ApplicationReadSummary,
+    ImageCreate,
+    ImageRead,
+)
 
-__all__ = ["UserCreate", "UserRead", "OrganizationCreate", "OrganizationRead", "OrganizationUpdate", "OpportunityCreate", "OpportunityRead", "OpportunityUpsertResult"]
+__all__ = [
+    "UserCreate", "UserRead",
+    "OrganizationCreate", "OrganizationRead", "OrganizationUpdate",
+    "OpportunityCreate", "OpportunityRead", "OpportunityUpsertResult",
+    "RecommendationCreate", "RecommendationCreateResult", "RecommendationRead",
+    "ApplicationCreate", "ApplicationReadDetail", "ApplicationReadSummary",
+    "ImageCreate", "ImageRead",
+]

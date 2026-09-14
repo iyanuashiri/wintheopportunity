@@ -197,6 +197,19 @@ async def run_recommender_for_user(user_id: int) -> RecommendationResult | None:
 
 
 if __name__ == "__main__":
+    import argparse
     import asyncio
 
-    asyncio.run(run_recommender())
+    parser = argparse.ArgumentParser(description="Run the recommender agent")
+    parser.add_argument(
+        "--user-id",
+        type=int,
+        default=None,
+        help="Run recommendations for a single user (onboarding). If omitted, runs for all users.",
+    )
+    args = parser.parse_args()
+
+    if args.user_id is not None:
+        asyncio.run(run_recommender_for_user(args.user_id))
+    else:
+        asyncio.run(run_recommender())

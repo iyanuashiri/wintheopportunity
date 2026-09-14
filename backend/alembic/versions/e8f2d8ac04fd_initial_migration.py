@@ -1,8 +1,8 @@
-"""Initial migration
+"""initial migration
 
-Revision ID: 7b545f0eef7a
+Revision ID: e8f2d8ac04fd
 Revises: 
-Create Date: 2026-09-09 02:08:33.429948
+Create Date: 2026-09-11 01:33:09.921283
 
 """
 from typing import Sequence, Union
@@ -12,7 +12,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision: str = '7b545f0eef7a'
+revision: str = 'e8f2d8ac04fd'
 down_revision: Union[str, Sequence[str], None] = None
 branch_labels: Union[str, Sequence[str], None] = None
 depends_on: Union[str, Sequence[str], None] = None
@@ -26,16 +26,18 @@ def upgrade() -> None:
     sa.Column('title', sa.String(length=255), nullable=True),
     sa.Column('organization_name', sa.String(length=255), nullable=True),
     sa.Column('organization_url', sa.String(length=500), nullable=True),
+    sa.Column('opportunity_url', sa.String(length=500), nullable=True),
     sa.Column('source_url', sa.String(length=255), nullable=True),
     sa.Column('application_url', sa.String(length=500), nullable=True),
     sa.Column('description', sa.Text(), nullable=True),
     sa.Column('eligibility_criteria', sa.Text(), nullable=True),
-    sa.Column('category', sa.Enum('GRANT', 'SCHOLARSHIP', 'FELLOWSHIP', 'ACCELERATOR', 'OTHER', name='category'), nullable=True),
+    sa.Column('category', sa.Enum('GRANT', 'SCHOLARSHIP', 'FELLOWSHIP', 'ACCELERATOR', 'AWARD', 'CONTEST', 'TRAINING', 'OTHER', name='category'), nullable=True),
+    sa.Column('start_date', sa.DateTime(), nullable=True),
     sa.Column('deadline', sa.DateTime(), nullable=True),
     sa.Column('scrapped_webpage', sa.Text(), nullable=True),
     sa.Column('created_at', sa.DateTime(), nullable=True),
     sa.PrimaryKeyConstraint('id'),
-    sa.UniqueConstraint('organization_url')
+    sa.UniqueConstraint('opportunity_url', 'start_date', 'deadline', name='uq_opportunity_url_start_deadline')
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),

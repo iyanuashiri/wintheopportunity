@@ -1,0 +1,14 @@
+[project]
+name = "application-scraper"
+version = "0.1.0"
+description = "Standalone application form scraper agent for Win The Opportunity"
+readme = "README.md"
+requires-python = ">=3.14"
+dependencies = [
+    "strands-agents[openai]>=1.0.0",
+    "strands-agents-tools>=0.2.0",
+    "playwright>=1.40.0",
+    "beautifulsoup4>=4.12.0",
+    "httpx>=0.27.0",
+    "pydantic-settings>=2.0.0",
+]
